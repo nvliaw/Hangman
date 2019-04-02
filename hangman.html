@@ -51,6 +51,10 @@
         let displayedword = [];
         let word;
 
+        function reload(){
+            document.location.reload()
+        }
+
 
         function generateLetters() {
             for (i = 0; i < 26; i++) {
@@ -63,6 +67,13 @@
                     guess = btn.innerHTML;
                     validGuess();
                 }
+            }
+        }
+
+        function hide(){
+            for (i=0; i<26; i++) {
+                alphabet = String.fromCharCode(65 + i)
+                document.getElementById(alphabet).style.display="none";
             }
         }
 
@@ -112,6 +123,7 @@
             end = true;
             if (lives == 0) {
                 endGame("lost");
+                hide()
             }
             for (i = 0; i < displayedword.length; i++) {
                 if (displayedword[i] == "_") {
@@ -125,6 +137,7 @@
                 generateLeaderboard();
                 document.getElementById("leaderboard").style.display = "table";
                 endGame("won")
+                hide()
             }
         }
 
@@ -140,11 +153,13 @@
             for (i = 0; i < 26; i++) {
                 document.getElementById(String.fromCharCode(65 + i)).style.display = "inline-block";
             }
+            document.getElementById('leaderboard').style.display="none";
             lives = 7;
             score = 0;
             displayedword = [];
             generateWord();
             displayGame();
+            reload();
         }
 
         function removeButton() {
