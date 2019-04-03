@@ -41,10 +41,19 @@
 
 
     <script>
-        let list_of_words = ["Committee", "Tattoo", "Electricity"]
-        let description_of_words = {"Committee": "Desc of committee",
+        let list_of_words = ["Committee", "Tattoo", "Electricity", 'pneumonoultramicroscopicsilicovolcanoconiosis', 
+        "Pseudopseudohypoparathyroidism", "Floccinaucinihilipilification", "Antidisestablishmentarianism", "pyx", 
+        "supercalifragilisticexpialidocious", "hippopotomonstrosesquippedaliophobie"]
+        let description_of_words = {"Committee": "a person or group of persons elected or appointed to perform some service or function, as to investigate, report on, or act upon a particular matter.",
                              "Tattoo": "A form of body modification where a design is made by inserting ink",
-                             "Electricity": "Is the set of physical phenomena associated with the presence and motion of electric charge"}
+                             "Electricity": "Is the set of physical phenomena associated with the presence and motion of electric charge",
+                             "pneumonoultramicroscopicsilicovolcanoconiosis": "an obscure term ostensibly referring to a lung disease caused by silica dust, sometimes cited as one of the longest words in the English language.",
+                             "Pseudopseudohypoparathyroidism": "An inherited disorder that closely simulates the symptoms but not the consequences of pseudohypoparathyroidism, thus it has mild or no manifestations of hypoparathyroidism or tetanic convulsions.",
+                             "Floccinaucinihilipilification": "Another word for Rare",
+                             "Antidisestablishmentarianism": "opposition to the withdrawal of state support or recognition from an established church, especially the Anglican Church in 19th-century England.",
+                             "supercalifragilisticexpialidocious": "used as a nonsense word by children to express approval or to represent the longest word in English.",
+                             "hippopotomonstrosesquippedaliophobie": "The fear of long words.",
+                             "pyx": "Also called pyx chest . a box or chest at a mint, in which specimen coins are deposited and reserved for trial by weight and assay."}
         let lives = 7;
         let score = 0;
         let guess;
@@ -78,7 +87,7 @@
         }
 
         function generateWord() {
-            let num = Math.floor(Math.random() * 3);
+            let num = Math.floor(Math.random() * 10);
             word = list_of_words[num];
             for (i = 0; i < word.length; i++) {
                 displayedword.push("_");
@@ -123,7 +132,7 @@
             end = true;
             if (lives == 0) {
                 endGame("lost");
-                hide()
+                hide();
             }
             for (i = 0; i < displayedword.length; i++) {
                 if (displayedword[i] == "_") {
@@ -131,13 +140,8 @@
                 }
             }
             if (end == true) {
-                firebase.database().ref("Scores/").update({
-                    [name]: score
-                });
-                generateLeaderboard();
-                document.getElementById("leaderboard").style.display = "table";
-                endGame("won")
-                hide()
+                endGame("won");
+                hide();
             }
         }
 
@@ -167,11 +171,18 @@
         }
 
         function endGame(result) {
+            let name = prompt("Please enter your name: ");
             document.getElementById("end").innerHTML = name + ", you have " + result + "! Your score is " + score + "!";
+            if (result == "won") {
+                firebase.database().ref("Scores/").update({
+                [name]: score
+                });
+            }
+            document.getElementById("leaderboard").style.display = "table";
+            generateLeaderboard();
         }
 
 
-        let name = prompt("Please enter your name: ");
         generateLetters();
         generateWord();
         displayGame();
