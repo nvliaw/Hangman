@@ -17,10 +17,6 @@ let guess;
 let displayedword = [];
 let word;
 
-function reload(){
-    document.location.reload()
-}
-
 
 function generateLetters() {  // Creates buttons dynamically
     for (i = 0; i < 26; i++) {
@@ -120,9 +116,10 @@ function restartGame() {  // resets entire game
     lives = 7;
     score = 0;
     displayedword = [];
-    reload();
-    displayGame();
     generateWord();
+    displayGame();
+    clearLeaderboard();
+    document.getElementById("end").innerHTML = "";
 }
 
 function removeButton() {  // hide buttons when clicked
@@ -142,16 +139,18 @@ function endGame(result) {  // prints message when game ends
 }
 
 
-generateLetters();
-generateWord();
-displayGame();
-document.getElementById("restart").onclick = restartGame;
-
+function clearLeaderboard() { // clears the current leaderboard
+    let current_leaderboard = document.getElementById("leaderboard");
+    let length_of_leaderboard = current_leaderboard.rows.length;
+    for(i=1; i<length_of_leaderboard; i++) {
+        removed_row = current_leaderboard.rows[1]
+        removed_row.remove()
+    }
+}
 
 function generateLeaderboard () {  // creates a leaderboard once user wins or loses.
-    var out = document.getElementById("test");
     var db = firebase.database().ref().child("Scores")
-    db.on(
+    db.once(
         "value",
         function(snap){
             dict_of_scores = snap.val();
@@ -161,7 +160,6 @@ function generateLeaderboard () {  // creates a leaderboard once user wins or lo
             for (i = 0; i < leadername.length; i++) {
                 sortable_scores.push([leadername[i], dict_of_scores[leadername[i]]])
             }
-            console.log(sortable_scores[0]);
             sorted_scores = [];
             sorted_scores.push(sortable_scores[0]);
             for (i = 1; i < sortable_scores.length; i++) {
@@ -191,3 +189,8 @@ function generateLeaderboard () {  // creates a leaderboard once user wins or lo
         }
     )
 }
+
+generateLetters();
+generateWord();
+displayGame();
+document.getElementById("restart").onclick = restartGame;
