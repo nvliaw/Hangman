@@ -1,6 +1,51 @@
 body {
     font-size: 1.5vw;
+    background-color: rgb(116, 116, 219);
 }
+h1, h3, p {
+    text-align: center;
+    color: white;
+}
+
+
+#buttons, #restartbutton {
+    margin-top: 8px;
+    text-align: center;
+}
+
+.button, #restart {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: none;
+    background-color:rgb(196, 91, 223);
+    border-radius: 8px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.button:hover, #restart:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
 table {
     border: 2px solid black;
+}
+#hangman_win {
+    display: none;
+    position: relative;
+    height: 30%;
+    width: 20%;
+    top: -5%;
+    left: 15%;
+}
+
+#hangman_lose {
+    display: none;
+    position: relative;
+    height: 25%;
+    width: 15%;
+    top: -5%;
+    left: 15%;
 }
