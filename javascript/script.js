@@ -7,7 +7,7 @@ let description_of_words = {"Committee": "a person or group of persons elected o
                      "pneumonoultramicroscopicsilicovolcanoconiosis": "an obscure term ostensibly referring to a lung disease caused by silica dust, sometimes cited as one of the longest words in the English language.",
                      "Pseudopseudohypoparathyroidism": "An inherited disorder that closely simulates the symptoms but not the consequences of pseudohypoparathyroidism, thus it has mild or no manifestations of hypoparathyroidism or tetanic convulsions.",
                      "Floccinaucinihilipilification": "Another word for Rare",
-                     "Antidisestablishmentarianism": "opposition to the withdrawal of state support or recognition from an established church, especially the Anglican Church in 19th-century England.",
+                     "Antidisestablishmentarianism": "Opposition to the withdrawal of state support or recognition from an established church, especially the Anglican Church in 19th-century England.",
                      "supercalifragilisticexpialidocious": "used as a nonsense word by children to express approval or to represent the longest word in English.",
                      "hippopotomonstrosesquippedaliophobie": "The fear of long words.",
                      "pyx": "Also called pyx chest . a box or chest at a mint, in which specimen coins are deposited and reserved for trial by weight and assay."}
@@ -41,6 +41,7 @@ function hide(){  // hides buttons
         alphabet = String.fromCharCode(65 + i)
         document.getElementById(alphabet).style.display="none";
     }
+    document.getElementById("buttons").style.display="none";
 }
 
 function generateWord() {  // picks random word from an array of words and assigns underscore for each letter
@@ -90,7 +91,6 @@ function checkGameStatus() { // checks condition to see if user has won or lost
     if (lives == 0) {
         endGame("lost");
         hide();
-        document.getElementById("hangman_lose").style.display="block";
     }
     for (i = 0; i < displayedword.length; i++) {
         if (displayedword[i] == "_") {
@@ -100,7 +100,6 @@ function checkGameStatus() { // checks condition to see if user has won or lost
     if (end == true) {
         endGame("won");
         hide();
-        document.getElementById("hangman_win").style.display="block";
     }
 }
 
@@ -116,15 +115,14 @@ function restartGame() {  // resets entire game
     for (i = 0; i < 26; i++) {
         document.getElementById(String.fromCharCode(65 + i)).style.display = "inline-block";
     }
+    document.getElementById("buttons").style.display = "block";
     document.getElementById('leaderboard').style.display="none";
     lives = 7;
     score = 0;
     displayedword = [];
-    generateWord();
-    displayGame();
     reload();
-    document.getElementById("hangman_lose").style.display="none";
-    document.getElementById("hangman_win").style.display="none";
+    displayGame();
+    generateWord();
 }
 
 function removeButton() {  // hide buttons when clicked
