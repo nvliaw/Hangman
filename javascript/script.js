@@ -49,7 +49,7 @@ function generateWord() {  // picks random word from an array of words and assig
 }
 
 function displayGame() {  // displays word description, lives and score
-    document.getElementById("description").innerHTML = description_of_words[word];
+    document.getElementById("worddescription").innerHTML = description_of_words[word];
     document.getElementById("lives").innerHTML = lives;
     document.getElementById("score").innerHTML = score;
     let current_word = ""
